@@ -1,0 +1,37 @@
+{
+  "name": "msbuild-debug",
+  "version": "0.1.0",
+  "displayName": "MSBuild Debug",
+  "engines": {
+    "vscode": "^1.63.0"
+  },
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "esbuild-base": "esbuild ./src/extension.ts --bundle --tsconfig=./tsconfig.json --external:vscode --format=cjs --platform=node --outfile=dist/extension.js",
+    "build": "npm run -S esbuild-base -- --sourcemap --sources-content=false",
+    "test": "npm run typecheck"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.37",
+    "@types/vscode": "^1.61.0",
+    "esbuild": "^0.13.12",
+    "typescript": "^4.4.4",
+    "vsce": "^2.5.1"
+  },
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onDebugResolve:msbuild"
+  ],
+  "contributes": {
+    "debuggers": [
+      {
+        "type": "msbuild",
+        "languages": [
+          "markdown"
+        ],
+        "label": "MSBuild Debug"
+      }
+    ]
+  }
+}
